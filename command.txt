@@ -1,0 +1,19 @@
+pipenv shell --for env file
+
+pipenv install django --for django download
+
+django-admin startproject incomeexpensewebsite 
+
+py manage.py startapp expenses --for control app and db file management
+
+py manage.py startapp authentication --for authentication 
+
+pip install django-heroku --to run application and instruction will given in procfile
+
+pipenv install waitress --python http server
+
+git commit -m "Initial commit"---commit changes
+
+git push -u origin master---push code
+
+
