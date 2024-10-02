@@ -16,4 +16,5 @@ git commit -m "Initial commit"---commit changes
 
 git push -u origin master---push code
 
+pipenv install validate-email--email validation
 
