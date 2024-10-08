@@ -12,7 +12,11 @@ pip install django-heroku --to run application and instruction will given in pro
 
 pipenv install waitress --python http server
 
-git commit -m "Initial commit"---commit changes
+git add . git commit -m "Initial commit"
+
+git branch -M main
+
+git branch
 
 git push -u origin master---push code
 
