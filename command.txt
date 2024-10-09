@@ -18,7 +18,7 @@ git branch -M main
 
 git branch
 
-git push -u origin master---push code
+git push -u origin main---push code
 
 pipenv install validate-email--email validation
 

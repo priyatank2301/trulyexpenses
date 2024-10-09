@@ -14,6 +14,7 @@ from pathlib import Path
 from decouple import config
 SECRET_KEY = config('SECRET_KEY')
 import django_heroku
+from django.contrib import messages
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -129,6 +130,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS=[os.path.join(BASE_DIR,'incomeexpensewebsite/static')]
 STATIC_ROOT=os.path.join(BASE_DIR,'static')
 
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
