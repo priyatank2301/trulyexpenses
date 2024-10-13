@@ -9,6 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailfeedbackArea = document.querySelector(".emailfeedbackArea");
     const emailSuccess = document.querySelector(".emailSuccess");
 
+    //submit button
+    const submitBtn = document.querySelector(".submit-btn");
+    
+
     // showPasswordToggle
     const passwordField = document.querySelector("#passwordField");
     const showPasswordToggle = document.querySelector(".showPasswordToggle");
@@ -49,9 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
             .then((data) => {
                 usernameSuccess.style.display = "none";
                 if (data.username_error) {
+                    submitBtn.setAttribute("disabled","disabled");
+                    submitBtn.disabled=true;
                     usernameField.classList.add("is-invalid");
                     feedbackArea.style.display = "block";
                     feedbackArea.innerHTML = `<p>${data.username_error}</p>`;
+                }else{
+                    submitBtn.removeAttribute("disabled");
                 }
             });
         }
@@ -78,9 +86,13 @@ document.addEventListener('DOMContentLoaded', () => {
             .then((data) => {
                 emailSuccess.style.display = "none";
                 if (data.email_error) {
+                    submitBtn.setAttribute("disabled","disabled");
+                    submitBtn.disabled=true;
                     emailField.classList.add("is-invalid");
                     emailfeedbackArea.style.display = "block";
                     emailfeedbackArea.innerHTML = `<p>${data.email_error}</p>`;
+                }else{
+                    submitBtn.removeAttribute("disabled");
                 }
             });
         }

@@ -14,14 +14,18 @@
                 {% csrf_token %}
                 {% include 'partial/_messages.html' %}
                  <div class="form-group">
-                     <input type="text" name="username" placeholder="Username" id="usernameField" class="form-control form-control-sm">
+                     <input type="text" name="username" placeholder="Username" id="usernameField" 
+                     class="form-control form-control-sm"
+                     value="{{fieldValues.username}}">
                  </div>
                  <div class="invalid-feedback" style="display: none;">
                      <p></p>
                  </div>
                  <p class="text-sm text-success usernameSuccess"></p>
                  <div class="form-group">
-                     <input type="email" name="email" placeholder="Email" id="emailField" class="form-control form-control-sm">
+                     <input type="email" name="email" placeholder="Email" id="emailField" 
+                     class="form-control form-control-sm"
+                     value="{{fieldValues.email}}">
                  </div>
                  <div class="emailfeedbackArea" style="display: none;">
                      <p></p>
@@ -33,7 +37,7 @@
                  </div>
                  
                  <div class="form-group">
-                     <input type="submit" value="Register" class="btn btn-block btn-primary">
+                     <input type="submit" value="Register" class="btn btn-block btn-primary submit-btn">
                  </div>
              </form>    
          </div>
