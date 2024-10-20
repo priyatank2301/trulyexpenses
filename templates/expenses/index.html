@@ -36,7 +36,7 @@
                     {% for expense in page_obj %}
                         <tr>
                             <td>{{ expense.amount }}</td>
-                            <td>{{ expense.category.name }}</td> <!-- Ensure you access the category name -->
+                            <td>{{ expense.category }}</td> 
                             <td>{{ expense.description }}</td>
                             <td>{{ expense.date }}</td>
                             <td><a href="{% url 'edit-expense' expense.id %}" class="btn btn-secondary btn-dark btn-sm">Edit</a></td>
