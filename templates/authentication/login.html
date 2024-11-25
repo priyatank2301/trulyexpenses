@@ -33,12 +33,24 @@
               class="form-control form-control-sm mt-3"
               id="passwordField"
             />
+            <div class="form-group d-flex justify-content-end">
+              <span class="form-control-sm">Forget Password ?
+                <a href="{% url 'request-password' %}">Reset Here</a>
+              </span>
+            </div>
           </div>
-          <input type="submit" value="Login" class="btn btn-block btn-primary submit-btn mt-2" />
+          <div class="form-group d-flex justify-content-center">
+          <input type="submit" value="Login" class="btn btn-block btn-primary submit-btn mt-2 form-control" />
+        </div>
         </form>
 
+        <div class="form-group d-flex justify-content-end">
+          <span class="form-control-sm">Don't have an account?
+            <a href="{% url 'register' %}">Register</a>
+          </span>
+        </div>
       </div>
-
+        
       </div>
     </div>
   </div>
