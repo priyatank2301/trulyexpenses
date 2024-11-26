@@ -31,17 +31,23 @@ def search_incomes(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def index(request):
     sources = Source.objects.all()
-    incomes=Income.objects.filter(owner=request.user)
-    paginator=Paginator(incomes,5)
-    page_number=request.GET.get('page')
-    page_obj= Paginator.get_page(paginator,page_number)
-    currency=UserPreference.objects.get(user=request.user).currency
-    context={
+    incomes = Income.objects.filter(owner=request.user)
+    paginator = Paginator(incomes, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    # Handle UserPreference
+    try:
+        currency = UserPreference.objects.get(user=request.user).currency
+    except UserPreference.DoesNotExist:
+        currency = 'USD'  # Provide a default currency or handle as needed
+
+    context = {
         'incomes': incomes,
-        'page_obj':page_obj,
-        'currency':currency
+        'page_obj': page_obj,
+        'currency': currency,
     }
-    return render(request, 'incomes/index.html',context)
+    return render(request, 'incomes/index.html', context)
 
 
 @login_required(login_url='/authentication/login')

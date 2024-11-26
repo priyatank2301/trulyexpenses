@@ -29,17 +29,23 @@ def search_expenses(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def index(request):
     categories = Category.objects.all()
-    expenses=Expense.objects.filter(owner=request.user)
-    paginator=Paginator(expenses,5)
-    page_number=request.GET.get('page')
-    page_obj= Paginator.get_page(paginator,page_number)
-    currency=UserPreference.objects.get(user=request.user).currency
-    context={
+    expenses = Expense.objects.filter(owner=request.user)
+    paginator = Paginator(expenses, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    # Handle UserPreference
+    try:
+        currency = UserPreference.objects.get(user=request.user).currency
+    except UserPreference.DoesNotExist:
+        currency = 'USD'  # Provide a default currency or redirect to set preferences
+
+    context = {
         'expenses': expenses,
-        'page_obj':page_obj,
-        'currency':currency
+        'page_obj': page_obj,
+        'currency': currency,
     }
-    return render(request, 'expenses/index.html',context)
+    return render(request, 'expenses/index.html', context)
 
 
 @login_required(login_url='/authentication/login')
