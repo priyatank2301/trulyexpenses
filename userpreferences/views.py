@@ -4,8 +4,13 @@ import json
 from django.conf import settings
 from .models import UserPreference
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import cache_control
 
-# Create your views here.
+
+@login_required(login_url='/authentication/login')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+
 def index(request):
     currency_data = []
     file_path = os.path.join(settings.BASE_DIR, 'currencies.json')

@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container mt-3">
     <div class="row  d-flex align-items-center">
-        <div class="col-md-9 bg-light">
+        <div class="col-md-8 bg-light">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="">Expenses</a></li>
@@ -12,17 +12,34 @@
                 </ol>
             </nav>
         </div>
-        <div class="col-md-2">
-            <a href="{% url 'add-expense' %}" class="btn btn-primary">Add Expense</a>
+        <div class="col-md-1"></div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <input type="text" class="form-control" id="searchField" placeholder="Search">
+              </div>
+           
         </div>
     </div>
     <div class="row mt-2">
-        <div class="col-md-8"></div>
-        <div class="col-md-4">
+        <div class="col-md-6">
+            
+
+        
+            <a href="{% url 'export-csv' %}" class="btn btn-secondary">Export CSV</a>
+   
+       
+            <a href="{% url 'export-csv' %}" class="btn btn-primary">Export PDF</a>
+        
+        
+            <a href="{% url 'export-excel' %}" class="btn btn-dark">Export Excel</a>
+    
+        </div>
+        <div class="col-md-2">
+            
+        </div>
+        <div class="col-md-4 d-flex justify-content-end">
   
-          <div class="form-group">
-            <input type="text" class="form-control" id="searchField" placeholder="Search">
-          </div>
+            <a href="{% url 'add-expense' %}" class="btn btn-primary">Add Expense</a>
         </div>
       </div>
     <div class="m-2">

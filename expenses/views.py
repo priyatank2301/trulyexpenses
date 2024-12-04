@@ -6,8 +6,11 @@ from django.contrib import messages
 from django.utils import timezone
 from django.core.paginator import Paginator
 import json
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponse
 from userpreferences.models import UserPreference
+import datetime
+import csv
+import xlwt
 
 @login_required(login_url='/authentication/login')
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -86,6 +89,8 @@ def add_expense(request):
 
     return render(request, 'expenses/add_expense.html', {'categories': categories, 'value': {}})
 
+@login_required(login_url='/authentication/login')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def edit_expense(request, id):
     expense = Expense.objects.get(pk=id)
     categories = Category.objects.all()
@@ -129,10 +134,97 @@ def edit_expense(request, id):
 
         messages.success(request, 'Expense updated successfully')
         return redirect('expenses')
-    
+
+@login_required(login_url='/authentication/login')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def delete_expense(request, id):
     expense = Expense.objects.get(pk=id)
     expense.delete()
     messages.success(request, 'Expense Deleted Successfully')
     return redirect('expenses')
+
+@login_required(login_url='/authentication/login')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def expense_category_summary(request):
+    todays_date = datetime.date.today()
+    last_one_month = todays_date - datetime.timedelta(days=30)
+    expenses = Expense.objects.filter(owner=request.user, date__gte=last_one_month, date__lte=todays_date)
+
+    finalrep = {}
+
+    def get_category(expense):
+        return expense.category
+
+    category_list = list(set(map(get_category, expenses)))
+
+    def get_expense_category_amount(category):
+        amount = 0
+        filtered_by_category = expenses.filter(category=category)
+
+        for item in filtered_by_category:
+            amount += item.amount
+        return amount
+
+    for category in category_list:
+        finalrep[category] = get_expense_category_amount(category)
+
+    return JsonResponse({'expense_category_data': finalrep}, safe=False)
+@login_required(login_url='/authentication/login')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def stats_view(request):
+    return render(request, 'expenses/stats.html')
+
+@login_required(login_url='/authentication/login')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def export_csv(request):
+    response=HttpResponse(content_type='text/csv')
+    response['Content-Disposition']='attachment; filename="expenses.csv"'
+
+    writer=csv.writer(response)
+    writer.writerow(['Amount','Description','Category','Date'])
+
+    # fetch expenses dinamically
+    expenses=Expense.objects.filter(owner=request.user)
+
+    for expense in expenses:
+        writer.writerow([expense.amount,expense.description,expense.category,expense.date])
+
+    return response
+
+
+@login_required(login_url='/authentication/login')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def export_excel(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="expenses.xls"'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Expenses')
+    row_num = 0
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    # Write the headers
+    columns = ['Amount', 'Description', 'Category', 'Date']
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    # Fetch and write data
+    font_style = xlwt.XFStyle()
+    rows = Expense.objects.filter(owner=request.user).values_list(
+        'amount', 'description', 'category', 'date'
+    )
+
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+    return response
+
+
+
+
+
 
