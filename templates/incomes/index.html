@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container mt-3">
     <div class="row  d-flex align-items-center">
-        <div class="col-md-9 bg-light">
+        <div class="col-md-8 bg-light">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="">Incomes</a></li>
@@ -12,17 +12,21 @@
                 </ol>
             </nav>
         </div>
-        <div class="col-md-2">
-            <a href="{% url 'add-income' %}" class="btn btn-primary">Add Income</a>
+        <div class="col-md-1"></div>
+        <div class="col-md-3">
+            <div class="form-group border border-dark">
+                <input type="text" class="form-control" id="searchField" placeholder="Search">
+              </div>
+          
         </div>
     </div>
     <div class="row mt-2">
-        <div class="col-md-8"></div>
-        <div class="col-md-4">
-  
-          <div class="form-group">
-            <input type="text" class="form-control" id="searchField" placeholder="Search">
-          </div>
+        <div class="col-md-6"></div
+            >
+        <div class="col-md-6 d-flex justify-content-end">
+            <a href="{% url 'add-income' %}" class="btn btn-primary p-1 ms-2">Add Income</a>
+            <a href="{% url 'export-csv' %}" class="btn btn-secondary p-1 ms-2">Export CSV</a>
+            <a href="{% url 'export-excel' %}" class="btn btn-primary p-1 ms-2">Export Excel</a>
         </div>
       </div>
     <div class="m-2">

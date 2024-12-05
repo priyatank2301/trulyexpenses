@@ -8,6 +8,8 @@ urlpatterns=[
     path('add-income',views.add_income,name="add-income"),
     path('edit-income/<int:id>',views.edit_income,name="edit-income"),
     path('delete-income/<int:id>',views.delete_income,name="delete-income"),
-    path('search-incomes', csrf_exempt(views.search_incomes), name="search-incomes")
+    path('search-incomes', csrf_exempt(views.search_incomes), name="search-incomes"),
+    path('export-csv', csrf_exempt(views.export_incomes_csv),name="export-csv"),
+    path('export-excel', csrf_exempt(views.export_incomes_excel),name="export-excel"),
 
 ]
